@@ -1,0 +1,5 @@
+@for (game of allFamilyGames$ | async; track game.appid) {
+  <div>
+    {{ game.name }}
+  </div>
+}
