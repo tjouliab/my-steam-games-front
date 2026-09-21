@@ -1,4 +1,4 @@
-@for (game of allFamilyGames$ | async; track game.appid) {
+@for (game of games$ | async; track game.id) {
   <div>
     {{ game.name }}
   </div>

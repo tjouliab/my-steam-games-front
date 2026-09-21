@@ -1,15 +1,15 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { SteamService } from './services/steam.service';
+import { GamesService } from './services/games.service';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe, JsonPipe],
+  imports: [AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class App {
-  steamService = inject(SteamService);
+  gamesService = inject(GamesService);
 
-  allFamilyGames$ = this.steamService.getAllFamilyGames();
+  games$ = this.gamesService.get();
 }

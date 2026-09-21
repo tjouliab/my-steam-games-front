@@ -29,8 +29,11 @@
     "@angular/forms": "^22.1.7",
     "@angular/platform-browser": "^22.1.7",
     "@angular/router": "^22.1.7",
+    "@nestia/fetcher": "11.3.4",
+    "my-steam-games-sdk": "link:../my-steam-games-back/sdk",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "typia": "12.1.1"
   },
   "devDependencies": {
     "@angular/build": "^22.1.8",
