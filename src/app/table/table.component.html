@@ -1,0 +1,9 @@
+@if (allGames.isLoading()) {
+  <p>Chargement…</p>
+} @else if (allGames.error()) {
+  <p>Impossible de charger les jeux.</p>
+} @else {
+  @for (game of allGames.value(); track game.id) {
+    <app-table-row [game]="game" />
+  }
+}

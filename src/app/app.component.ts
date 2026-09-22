@@ -1,15 +1,9 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { GamesService } from './services/games.service';
+import { Component } from '@angular/core';
+import { TableComponent } from './table/table.component';
 
 @Component({
   selector: 'app-root',
-  imports: [AsyncPipe],
+  imports: [TableComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
-export class App {
-  gamesService = inject(GamesService);
-
-  games$ = this.gamesService.get();
-}
+export class App {}
