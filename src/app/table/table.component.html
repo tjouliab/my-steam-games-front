@@ -1,9 +1,98 @@
-@if (allGames.isLoading()) {
+@if (gamesResource.isLoading()) {
   <p>Chargement…</p>
-} @else if (allGames.error()) {
+} @else if (gamesResource.error()) {
   <p>Impossible de charger les jeux.</p>
 } @else {
-  @for (game of allGames.value(); track game.id) {
-    <app-table-row [game]="game" />
-  }
+  <table mat-table [dataSource]="gamesResource.value()">
+    <!-- Img -->
+    <ng-container matColumnDef="jeu">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let game">
+        <img class="h-full object-contain" [src]="game | icon" alt="Game Icon" />
+      </td>
+    </ng-container>
+
+    <!-- Personnal Score /10 -->
+    <ng-container matColumnDef="personnalScore">
+      <th mat-header-cell *matHeaderCellDef>Score Perso</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.personnalScore }}
+      </td>
+    </ng-container>
+
+    <!-- Steam Score (%) -->
+    <ng-container matColumnDef="steamScore">
+      <th mat-header-cell *matHeaderCellDef>Score Steam</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game | steamScore }}
+      </td>
+    </ng-container>
+
+    <!-- Metacritic Score /100 -->
+    <ng-container matColumnDef="metacriticScore">
+      <th mat-header-cell *matHeaderCellDef>Score Metacritic</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.metacriticScore }}
+      </td>
+    </ng-container>
+
+    <!-- Play Time -->
+    <ng-container matColumnDef="playTime">
+      <th mat-header-cell *matHeaderCellDef>Temps de jeu</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.playTime }}
+      </td>
+    </ng-container>
+
+    <!-- Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Statut</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game?.status?.label }}
+      </td>
+    </ng-container>
+
+    <!-- Last Time Played -->
+    <ng-container matColumnDef="lastTimePlayed">
+      <th mat-header-cell *matHeaderCellDef>Dernier lancement</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game | lastTimePlayed }}
+      </td>
+    </ng-container>
+
+    <!-- Genres -->
+    <ng-container matColumnDef="genres">
+      <th mat-header-cell *matHeaderCellDef>Genres</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game | genres }}
+      </td>
+    </ng-container>
+
+    <!-- Release Date -->
+    <ng-container matColumnDef="releaseDate">
+      <th mat-header-cell *matHeaderCellDef>Date de sortie</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.releaseDate }}
+      </td>
+    </ng-container>
+
+    <!-- Initial Price -->
+    <ng-container matColumnDef="initialPrice">
+      <th mat-header-cell *matHeaderCellDef>Prix</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.initialPrice }}
+      </td>
+    </ng-container>
+
+    <!-- Personnal Notes -->
+    <ng-container matColumnDef="personnalNotes">
+      <th mat-header-cell *matHeaderCellDef>Notes perso</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.personnalNotes }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 }
