@@ -6,3 +6,4 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@angular/cdk@22.2.0'
   - '@angular/material@22.2.0'
+  - '@angular-devkit/schematics@22.1.9'
