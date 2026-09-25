@@ -1,6 +1,4 @@
 :host {
-  --game-table-width: 1440px;
-
   display: block;
   width: 100%;
   overflow-x: auto;
