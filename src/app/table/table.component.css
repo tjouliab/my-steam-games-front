@@ -1,10 +1,52 @@
 :host {
   display: block;
+  height: 100%;
   width: 100%;
   overflow-x: auto;
+
+  --table-header-bg: #1f2937;
+  --table-row-odd-bg: #f8fafc;
+  --table-row-even-bg: #e2e8f0;
 
   .mdc-data-table__cell,
   .mdc-data-table__header-cell {
     padding: 0 16px 0 0;
+  }
+
+  th.mat-mdc-header-cell,
+  td.mat-mdc-cell {
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  tr.mat-mdc-header-row,
+  tr.mat-mdc-header-row th {
+    background-color: var(--table-header-bg);
+    color: white;
+  }
+
+  tr.mat-mdc-row:nth-child(odd),
+  tr.mat-mdc-row:nth-child(odd) td {
+    background-color: var(--table-row-odd-bg);
+  }
+
+  tr.mat-mdc-row:nth-child(even),
+  tr.mat-mdc-row:nth-child(even) td {
+    background-color: var(--table-row-even-bg);
+  }
+
+  ::ng-deep .mat-sort-header-container {
+    position: relative;
+    justify-content: center;
+  }
+
+  ::ng-deep .mat-sort-header-sorted .mat-sort-header-arrow {
+    color: white;
+  }
+
+  ::ng-deep .mat-sort-header-arrow {
+    position: absolute;
+    right: 0px;
+    margin: 0;
   }
 }
