@@ -5,8 +5,10 @@
 } @else if (dataSource(); as dataSource) {
   <table mat-table matSort [dataSource]="dataSource">
     <!-- Img -->
-    <ng-container matColumnDef="jeu">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[206px]">Jeu</th>
+    <ng-container [matColumnDef]="COLUMNS.JEU.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[206px]">
+        {{ COLUMNS.JEU.NAME }}
+      </th>
       <td mat-cell *matCellDef="let game; let $index = index" class="!w-[206px]">
         <!-- Ratio w/h: 2.14 -->
         <img
@@ -21,72 +23,76 @@
     </ng-container>
 
     <!-- Personnal Score /10 -->
-    <ng-container matColumnDef="personnalScore">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Score Perso</th>
+    <ng-container [matColumnDef]="COLUMNS.PERSONNAL_SCORE.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.PERSONNAL_SCORE.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         {{ game.personnalScore }}
       </td>
     </ng-container>
 
     <!-- Steam Score (%) -->
-    <ng-container matColumnDef="steamScore">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Score Steam</th>
+    <ng-container [matColumnDef]="COLUMNS.STEAM_SCORE.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.STEAM_SCORE.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         {{ game | steamScore }}
       </td>
     </ng-container>
 
     <!-- Metacritic Score /100 -->
-    <ng-container matColumnDef="metacriticScore">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Score Metacritic</th>
+    <ng-container [matColumnDef]="COLUMNS.METACRITIC_SCORE.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.METACRITIC_SCORE.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         {{ game.metacriticScore }}
       </td>
     </ng-container>
 
     <!-- Play Time -->
-    <ng-container matColumnDef="playTime">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Temps de jeu</th>
+    <ng-container [matColumnDef]="COLUMNS.PLAY_TIME.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.PLAY_TIME.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         {{ game | playTime }}
       </td>
     </ng-container>
 
     <!-- Status -->
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Statut</th>
+    <ng-container [matColumnDef]="COLUMNS.STATUS.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.STATUS.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         {{ game?.status?.label }}
       </td>
     </ng-container>
 
     <!-- Last Time Played -->
-    <ng-container matColumnDef="lastTimePlayed">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px]">Dernier lancement</th>
+    <ng-container [matColumnDef]="COLUMNS.LAST_TIME_PLAYED.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px]">
+        {{ COLUMNS.LAST_TIME_PLAYED.NAME }}
+      </th>
       <td mat-cell *matCellDef="let game" class="!w-[170px]">
         {{ game | lastTimePlayed }}
       </td>
     </ng-container>
 
     <!-- Genres -->
-    <ng-container matColumnDef="genres">
-      <th mat-header-cell *matHeaderCellDef class="!w-[206px]">Genres</th>
+    <ng-container [matColumnDef]="COLUMNS.GENRES.FIELD">
+      <th mat-header-cell *matHeaderCellDef class="!w-[206px]">{{ COLUMNS.GENRES.NAME }}</th>
       <td mat-cell *matCellDef="let game" class="!w-[206px]">
         {{ game | genres }}
       </td>
     </ng-container>
 
     <!-- Release Date -->
-    <ng-container matColumnDef="releaseDate">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px]">Date de sortie</th>
+    <ng-container [matColumnDef]="COLUMNS.RELEASE_DATE.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px]">
+        {{ COLUMNS.RELEASE_DATE.NAME }}
+      </th>
       <td mat-cell *matCellDef="let game" class="!w-[170px]">
         {{ game.releaseDate }}
       </td>
     </ng-container>
 
     <!-- Initial Price -->
-    <ng-container matColumnDef="initialPrice">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prix</th>
+    <ng-container [matColumnDef]="COLUMNS.INITIAL_PRICE.FIELD">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.INITIAL_PRICE.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         @if (game.initialPrice > 0) {
           {{ game.initialPrice / 100 | currency: 'EUR' }}
@@ -97,8 +103,8 @@
     </ng-container>
 
     <!-- Personnal Notes -->
-    <ng-container matColumnDef="personnalNotes">
-      <th mat-header-cell *matHeaderCellDef>Notes perso</th>
+    <ng-container [matColumnDef]="COLUMNS.PERSONNAL_NOTES.FIELD">
+      <th mat-header-cell *matHeaderCellDef>{{ COLUMNS.PERSONNAL_NOTES.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         {{ game.personnalNotes }}
       </td>

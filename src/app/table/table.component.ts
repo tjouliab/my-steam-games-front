@@ -9,21 +9,19 @@ import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
 import { GameDto } from '../../types/game.dto';
 
-const COLUMNS_NAME = {
-  JEU: 'jeu',
-  PERSONNAL_SCORE: 'personnalScore',
-  STEAM_SCORE: 'steamScore',
-  METACRITIC_SCORE: 'metacriticScore',
-  PLAY_TIME: 'playTime',
-  STATUS: 'status',
-  LAST_TIME_PLAYED: 'lastTimePlayed',
-  GENRES: 'genres',
-  RELEASE_DATE: 'releaseDate',
-  INITIAL_PRICE: 'initialPrice',
-  PERSONNAL_NOTES: 'personnalNotes',
+const COLUMNS = {
+  JEU: { FIELD: 'jeu', NAME: 'Jeu' },
+  PERSONNAL_SCORE: { FIELD: 'personnalScore', NAME: 'Score Perso' },
+  STEAM_SCORE: { FIELD: 'steamScore', NAME: 'Score Steam' },
+  METACRITIC_SCORE: { FIELD: 'metacriticScore', NAME: 'Score Metacritic' },
+  PLAY_TIME: { FIELD: 'playTime', NAME: 'Temps de jeu' },
+  STATUS: { FIELD: 'status', NAME: 'Statut' },
+  LAST_TIME_PLAYED: { FIELD: 'lastTimePlayed', NAME: 'Dernier lancement' },
+  GENRES: { FIELD: 'genres', NAME: 'Genres' },
+  RELEASE_DATE: { FIELD: 'releaseDate', NAME: 'Date de sortie' },
+  INITIAL_PRICE: { FIELD: 'initialPrice', NAME: 'Prix' },
+  PERSONNAL_NOTES: { FIELD: 'personnalNotes', NAME: 'Notes perso' },
 } as const;
-
-type ColumnsNames = (typeof COLUMNS_NAME)[keyof typeof COLUMNS_NAME];
 
 @Component({
   imports: [
@@ -52,9 +50,9 @@ export class TableComponent {
     const dataSource = new MatTableDataSource<GameDto>(this.gamesResource.value());
     dataSource.sort = this.sort() ?? null;
     dataSource.sortingDataAccessor = (game, column) => {
-      if (column === COLUMNS_NAME.JEU) return game.name.toLocaleLowerCase();
-      if (column === COLUMNS_NAME.STATUS) return game.status?.label ?? '';
-      if (column === COLUMNS_NAME.STEAM_SCORE) {
+      if (column === COLUMNS.JEU.FIELD) return game.name.toLocaleLowerCase();
+      if (column === COLUMNS.STATUS.FIELD) return game.status?.label ?? '';
+      if (column === COLUMNS.STEAM_SCORE.FIELD) {
         const totalReviews = game.positiveReviews + game.negativeReviews;
         return Math.floor((game.positiveReviews / totalReviews) * 100);
       }
@@ -65,17 +63,18 @@ export class TableComponent {
     return dataSource;
   });
 
-  protected readonly displayedColumns: ColumnsNames[] = [
-    COLUMNS_NAME.JEU,
-    COLUMNS_NAME.PERSONNAL_SCORE,
-    COLUMNS_NAME.STEAM_SCORE,
-    COLUMNS_NAME.METACRITIC_SCORE,
-    COLUMNS_NAME.PLAY_TIME,
-    COLUMNS_NAME.STATUS,
-    COLUMNS_NAME.LAST_TIME_PLAYED,
-    COLUMNS_NAME.GENRES,
-    COLUMNS_NAME.RELEASE_DATE,
-    COLUMNS_NAME.INITIAL_PRICE,
-    COLUMNS_NAME.PERSONNAL_NOTES,
+  protected readonly COLUMNS = COLUMNS;
+  protected readonly displayedColumns = [
+    COLUMNS.JEU.FIELD,
+    COLUMNS.PERSONNAL_SCORE.FIELD,
+    COLUMNS.STEAM_SCORE.FIELD,
+    COLUMNS.METACRITIC_SCORE.FIELD,
+    COLUMNS.PLAY_TIME.FIELD,
+    COLUMNS.STATUS.FIELD,
+    COLUMNS.LAST_TIME_PLAYED.FIELD,
+    COLUMNS.GENRES.FIELD,
+    COLUMNS.RELEASE_DATE.FIELD,
+    COLUMNS.INITIAL_PRICE.FIELD,
+    COLUMNS.PERSONNAL_NOTES.FIELD,
   ];
 }
