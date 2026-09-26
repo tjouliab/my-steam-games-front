@@ -1,4 +1,4 @@
-import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
+import { CurrencyPipe, DecimalPipe, NgOptimizedImage, PercentPipe } from '@angular/common';
 import { Component, computed, inject, viewChild } from '@angular/core';
 import { MatIconButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,11 +6,12 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { GenresPipe } from '../../pipes/genres.pipe';
 import { LastTimePlayedPipe } from '../../pipes/last-time-played.pipe';
+import { NeedsEditPipe } from '../../pipes/needs-edit.pipe';
 import { PlayTimePipe } from '../../pipes/play-time.pipe';
 import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
 import { GameDto } from '../../types/game.dto';
-import { NeedsEditPipe } from '../../pipes/needs-edit.pipe';
+import { GameUtils } from '../../utils/game.utils';
 
 const COLUMNS = {
   JEU: { FIELD: 'jeu', NAME: 'Jeu' },
@@ -40,6 +41,8 @@ const COLUMNS = {
     CurrencyPipe,
     PlayTimePipe,
     NeedsEditPipe,
+    PercentPipe,
+    DecimalPipe,
   ],
   selector: 'app-table',
   styleUrl: './table.component.css',
@@ -59,10 +62,7 @@ export class TableComponent {
     dataSource.sortingDataAccessor = (game, column) => {
       if (column === COLUMNS.JEU.FIELD) return game.name.toLocaleLowerCase();
       if (column === COLUMNS.STATUS.FIELD) return game.status?.label ?? '';
-      if (column === COLUMNS.STEAM_SCORE.FIELD) {
-        const totalReviews = game.positiveReviews + game.negativeReviews;
-        return Math.floor((game.positiveReviews / totalReviews) * 100);
-      }
+      if (column === COLUMNS.STEAM_SCORE.FIELD) return GameUtils.getSteamScore(game);
 
       return game[column as keyof GameDto] as string | number;
     };
@@ -85,6 +85,36 @@ export class TableComponent {
     COLUMNS.PERSONNAL_NOTES.FIELD,
     COLUMNS.EDIT.FIELD,
   ];
+
+  protected readonly gamesCount = computed(() => this.dataSource()?.data.length ?? 0);
+
+  protected readonly personnalScoreAvg = computed(() => {
+    return GameUtils.calculateAvg(this.dataSource()?.data, (game) => game.personnalScore);
+  });
+
+  protected readonly steamScoreAvg = computed(() => {
+    return GameUtils.calculateAvg(this.dataSource()?.data, (game) => GameUtils.getSteamScore(game));
+  });
+
+  protected readonly metacriticScoreAvg = computed(() => {
+    return GameUtils.calculateAvg(this.dataSource()?.data, (game) => game.metacriticScore);
+  });
+
+  protected readonly playTimeSum = computed(() => {
+    return GameUtils.calculateSum(this.dataSource()?.data, (game) => game.playTime);
+  });
+
+  protected readonly finishedPercentage = computed(() => {
+    return GameUtils.finishedPercentage(this.dataSource()?.data);
+  });
+
+  protected readonly initialPriceSum = computed(() => {
+    return GameUtils.calculateSum(this.dataSource()?.data, (game) => game.initialPrice);
+  });
+
+  protected readonly anyNeedsEdit = computed(() => {
+    return GameUtils.anyNeedsEdit(this.dataSource()?.data);
+  });
 
   protected onEdit(game: GameDto): void {
     return;

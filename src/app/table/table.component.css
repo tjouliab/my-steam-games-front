@@ -7,14 +7,17 @@
   --table-header-bg: #1f2937;
   --table-row-odd-bg: #f8fafc;
   --table-row-even-bg: #e2e8f0;
+  --table-footer-bg: #371f35;
 
+  .mdc-data-table__header-cell,
   .mdc-data-table__cell,
-  .mdc-data-table__header-cell {
+  .mdc-data-table__footer-cell {
     padding: 0 16px 0 0;
   }
 
   th.mat-mdc-header-cell,
-  td.mat-mdc-cell {
+  td.mat-mdc-cell,
+  td.mat-mdc-footer-cell {
     text-align: center;
     vertical-align: middle;
   }
@@ -33,6 +36,12 @@
   tr.mat-mdc-row:nth-child(even),
   tr.mat-mdc-row:nth-child(even) td {
     background-color: var(--table-row-even-bg);
+  }
+
+  tr.mat-mdc-footer-row,
+  tr.mat-mdc-footer-row th {
+    background-color: var(--table-footer-bg);
+    color: white;
   }
 
   ::ng-deep .mat-sort-header-container {
