@@ -1,5 +1,7 @@
 import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, viewChild } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { GenresPipe } from '../../pipes/genres.pipe';
@@ -8,6 +10,7 @@ import { PlayTimePipe } from '../../pipes/play-time.pipe';
 import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
 import { GameDto } from '../../types/game.dto';
+import { NeedsEditPipe } from '../../pipes/needs-edit.pipe';
 
 const COLUMNS = {
   JEU: { FIELD: 'jeu', NAME: 'Jeu' },
@@ -21,18 +24,22 @@ const COLUMNS = {
   RELEASE_DATE: { FIELD: 'releaseDate', NAME: 'Date de sortie' },
   INITIAL_PRICE: { FIELD: 'initialPrice', NAME: 'Prix' },
   PERSONNAL_NOTES: { FIELD: 'personnalNotes', NAME: 'Notes perso' },
+  EDIT: { FIELD: 'edit', NAME: 'Edit' },
 } as const;
 
 @Component({
   imports: [
     MatTableModule,
     MatSortModule,
+    MatIconModule,
+    MatIconButton,
+    NgOptimizedImage,
     SteamScorePipe,
     GenresPipe,
     LastTimePlayedPipe,
     CurrencyPipe,
     PlayTimePipe,
-    NgOptimizedImage,
+    NeedsEditPipe,
   ],
   selector: 'app-table',
   styleUrl: './table.component.css',
@@ -76,5 +83,10 @@ export class TableComponent {
     COLUMNS.RELEASE_DATE.FIELD,
     COLUMNS.INITIAL_PRICE.FIELD,
     COLUMNS.PERSONNAL_NOTES.FIELD,
+    COLUMNS.EDIT.FIELD,
   ];
+
+  protected onEdit(game: GameDto): void {
+    return;
+  }
 }

@@ -24,50 +24,50 @@
 
     <!-- Personnal Score /10 -->
     <ng-container [matColumnDef]="COLUMNS.PERSONNAL_SCORE.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.PERSONNAL_SCORE.NAME }}</th>
-      <td mat-cell *matCellDef="let game">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[90px] !min-w-[90px]">{{ COLUMNS.PERSONNAL_SCORE.NAME }}</th>
+      <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game.personnalScore }}
       </td>
     </ng-container>
 
     <!-- Steam Score (%) -->
     <ng-container [matColumnDef]="COLUMNS.STEAM_SCORE.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.STEAM_SCORE.NAME }}</th>
-      <td mat-cell *matCellDef="let game">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[90px] !min-w-[90px]">{{ COLUMNS.STEAM_SCORE.NAME }}</th>
+      <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game | steamScore }}
       </td>
     </ng-container>
 
     <!-- Metacritic Score /100 -->
-    <ng-container [matColumnDef]="COLUMNS.METACRITIC_SCORE.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.METACRITIC_SCORE.NAME }}</th>
-      <td mat-cell *matCellDef="let game">
+    <ng-container [matColumnDef]="COLUMNS.METACRITIC_SCORE.FIELD" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[90px] !min-w-[90px]">{{ COLUMNS.METACRITIC_SCORE.NAME }}</th>
+      <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game.metacriticScore }}
       </td>
     </ng-container>
 
     <!-- Play Time -->
     <ng-container [matColumnDef]="COLUMNS.PLAY_TIME.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.PLAY_TIME.NAME }}</th>
-      <td mat-cell *matCellDef="let game">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[90px] !min-w-[90px]">{{ COLUMNS.PLAY_TIME.NAME }}</th>
+      <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game | playTime }}
       </td>
     </ng-container>
 
     <!-- Status -->
     <ng-container [matColumnDef]="COLUMNS.STATUS.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.STATUS.NAME }}</th>
-      <td mat-cell *matCellDef="let game">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[90px] !min-w-[90px]">{{ COLUMNS.STATUS.NAME }}</th>
+      <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game?.status?.label }}
       </td>
     </ng-container>
 
     <!-- Last Time Played -->
     <ng-container [matColumnDef]="COLUMNS.LAST_TIME_PLAYED.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px]">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px] !min-w-[170px]">
         {{ COLUMNS.LAST_TIME_PLAYED.NAME }}
       </th>
-      <td mat-cell *matCellDef="let game" class="!w-[170px]">
+      <td mat-cell *matCellDef="let game" class="!w-[170px] !min-w-[170px]">
         {{ game | lastTimePlayed }}
       </td>
     </ng-container>
@@ -82,18 +82,18 @@
 
     <!-- Release Date -->
     <ng-container [matColumnDef]="COLUMNS.RELEASE_DATE.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px]">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[170px] !min-w-[170px]">
         {{ COLUMNS.RELEASE_DATE.NAME }}
       </th>
-      <td mat-cell *matCellDef="let game" class="!w-[170px]">
+      <td mat-cell *matCellDef="let game" class="!w-[170px] !min-w-[170px]">
         {{ game.releaseDate }}
       </td>
     </ng-container>
 
     <!-- Initial Price -->
     <ng-container [matColumnDef]="COLUMNS.INITIAL_PRICE.FIELD">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ COLUMNS.INITIAL_PRICE.NAME }}</th>
-      <td mat-cell *matCellDef="let game">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header class="!w-[80px] !min-w-[80px]">{{ COLUMNS.INITIAL_PRICE.NAME }}</th>
+      <td mat-cell *matCellDef="let game" class="!w-[80px] !min-w-[80px]">
         @if (game.initialPrice > 0) {
           {{ game.initialPrice / 100 | currency: 'EUR' }}
         } @else {
@@ -107,6 +107,25 @@
       <th mat-header-cell *matHeaderCellDef>{{ COLUMNS.PERSONNAL_NOTES.NAME }}</th>
       <td mat-cell *matCellDef="let game">
         {{ game.personnalNotes }}
+      </td>
+    </ng-container>
+
+    <!-- Edit -->
+    <ng-container [matColumnDef]="COLUMNS.EDIT.FIELD">
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="!w-[48px]"></th>
+      <td mat-cell *matCellDef="let game" class="!w-[48px]">
+        <div class="relative inline-flex">
+          <button matIconButton (click)="onEdit(game); $event.stopPropagation()" aria-label="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          @if (game | needsEdit) {
+            <span
+              class="pointer-events-none absolute top-1 left-1 size-2 rounded-full bg-orange-500"
+              aria-label="Score personnel non renseigné"
+              title="Score personnel non renseigné"
+            ></span>
+          }
+        </div>
       </td>
     </ng-container>
 
