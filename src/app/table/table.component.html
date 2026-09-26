@@ -20,7 +20,12 @@
           height="96"
         />
       </td>
-      <td mat-footer-cell *matFooterCellDef>(&sum;) {{ gamesCount() }} jeux</td>
+      <td mat-footer-cell *matFooterCellDef>
+        <span class="footer-icon-text">
+          <mat-icon svgIcon="sigma" />
+          {{ gamesCount() }} jeux
+        </span>
+      </td>
     </ng-container>
 
     <!-- Personnal Score /10 -->
@@ -31,7 +36,12 @@
       <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game.personnalScore }}
       </td>
-      <td mat-footer-cell *matFooterCellDef>(x̄) {{ personnalScoreAvg() }}/10</td>
+      <td mat-footer-cell *matFooterCellDef>
+        <span class="footer-icon-text">
+          <mat-icon svgIcon="average" />
+          {{ personnalScoreAvg() }}/10
+        </span>
+      </td>
     </ng-container>
 
     <!-- Steam Score (%) -->
@@ -42,7 +52,12 @@
       <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game | steamScore | percent }}
       </td>
-      <td mat-footer-cell *matFooterCellDef>(x̄) {{ steamScoreAvg() | percent }}</td>
+      <td mat-footer-cell *matFooterCellDef>
+        <span class="footer-icon-text">
+          <mat-icon svgIcon="average" />
+          {{ steamScoreAvg() | percent }}
+        </span>
+      </td>
     </ng-container>
 
     <!-- Metacritic Score /100 -->
@@ -54,7 +69,10 @@
         {{ game.metacriticScore }}
       </td>
       <td mat-footer-cell *matFooterCellDef>
-        (x̄) {{ metacriticScoreAvg() | number: '1.0-0' }}/100
+        <span class="footer-icon-text">
+          <mat-icon svgIcon="average" />
+          {{ metacriticScoreAvg() | number: '1.0-0' }}/100
+        </span>
       </td>
     </ng-container>
 
@@ -66,7 +84,12 @@
       <td mat-cell *matCellDef="let game" class="!w-[90px] !min-w-[90px]">
         {{ game.playTime | playTime }}
       </td>
-      <td mat-footer-cell *matFooterCellDef>(&sum;) {{ playTimeSum() | playTime }}</td>
+      <td mat-footer-cell *matFooterCellDef>
+        <span class="footer-icon-text">
+          <mat-icon svgIcon="sigma" />
+          {{ playTimeSum() | playTime }}
+        </span>
+      </td>
     </ng-container>
 
     <!-- Status -->
@@ -124,7 +147,10 @@
         }
       </td>
       <td mat-footer-cell *matFooterCellDef>
-        (&sum;) {{ initialPriceSum() / 100 | currency: 'EUR' : 'symbol' : '1.0-0' }}
+        <span class="footer-icon-text">
+          <mat-icon svgIcon="sigma" />
+          {{ initialPriceSum() / 100 | currency: 'EUR' : 'symbol' : '1.0-0' }}
+        </span>
       </td>
     </ng-container>
 
