@@ -1,5 +1,6 @@
 import { CurrencyPipe, DecimalPipe, NgOptimizedImage, PercentPipe } from '@angular/common';
 import { Component, computed, inject, viewChild } from '@angular/core';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -33,6 +34,7 @@ const COLUMNS = {
     MatTableModule,
     MatSortModule,
     MatIconModule,
+    MatBadgeModule,
     MatIconButton,
     NgOptimizedImage,
     SteamScorePipe,
@@ -112,8 +114,8 @@ export class TableComponent {
     return GameUtils.calculateSum(this.dataSource()?.data, (game) => game.initialPrice);
   });
 
-  protected readonly anyNeedsEdit = computed(() => {
-    return GameUtils.anyNeedsEdit(this.dataSource()?.data);
+  protected readonly countNeedsEdit = computed(() => {
+    return GameUtils.countNeedsEdit(this.dataSource()?.data);
   });
 
   protected onEdit(game: GameDto): void {

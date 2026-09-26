@@ -59,9 +59,9 @@ export abstract class GameUtils {
     return 1 - statusMap.get('Unfinished')! / statusMap.get('total')!;
   }
 
-  static anyNeedsEdit(games: GameDto[] | undefined): boolean {
-    if (games == null) return false;
+  static countNeedsEdit(games: GameDto[] | undefined): number {
+    if (games == null) return 0;
 
-    return games.some(GameUtils.needsEdit);
-  };
+    return games.filter(GameUtils.needsEdit).length;
+  }
 }

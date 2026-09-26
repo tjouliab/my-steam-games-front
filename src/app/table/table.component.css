@@ -65,4 +65,8 @@
     right: 0px;
     margin: 0;
   }
+
+  ::ng-deep .mat-badge-content {
+    background: #cf6910;
+  }
 }

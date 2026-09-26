@@ -165,28 +165,37 @@
 
     <!-- Edit -->
     <ng-container [matColumnDef]="COLUMNS.EDIT.FIELD">
-      <th mat-header-cell *matHeaderCellDef aria-label="row actions" class="!w-[48px]"></th>
-      <td mat-cell *matCellDef="let game" class="!w-[48px]">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        aria-label="row actions"
+        class="!w-[64px] !min-w-[64px]"
+      ></th>
+      <td mat-cell *matCellDef="let game" class="!w-[64px] !min-w-[64px]">
         <div class="relative inline-flex">
-          <button matIconButton (click)="onEdit(game); $event.stopPropagation()" aria-label="Edit">
+          <button
+            matIconButton
+            [matBadgeHidden]="!(game | needsEdit)"
+            matBadge="&#8288;"
+            matBadgeSize="medium"
+            matBadgePosition="above before"
+            (click)="onEdit(game); $event.stopPropagation()"
+            aria-label="Edit"
+          >
             <mat-icon>edit</mat-icon>
           </button>
-          @if (game | needsEdit) {
-            <span
-              class="pointer-events-none absolute top-1 left-1 size-2 rounded-full bg-orange-500"
-              aria-label="Score personnel non renseigné"
-              title="Score personnel non renseigné"
-            ></span>
-          }
         </div>
       </td>
       <td mat-footer-cell *matFooterCellDef>
-        @if (anyNeedsEdit()) {
+        @let count = countNeedsEdit();
+        @if (count > 0) {
           <span
-            class="inline-block size-2 rounded-full bg-orange-500"
-            aria-label="Score personnel non renseigné"
-            title="Score personnel non renseigné"
-          ></span>
+            class="relative -top-[8px] inline-block"
+            matBadgeSize="medium"
+            matBadgePosition="above after"
+            [matBadge]="count"
+          >
+          </span>
         }
       </td>
     </ng-container>
