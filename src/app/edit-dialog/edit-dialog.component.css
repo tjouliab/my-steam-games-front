@@ -1,0 +1,3 @@
+:host ::ng-deep .mat-mdc-radio-button {
+  --mat-radio-label-text-color: white;
+}

@@ -1,0 +1,55 @@
+<!-- Image ratio 1440w/810h -->
+<section class="relative isolate h-[810px] w-[1440px] overflow-hidden">
+  <img
+    class="absolute inset-0 -z-10 h-full w-full object-cover"
+    [ngSrc]="game.backgroundUrl"
+    fill
+    priority
+    alt="Game Background"
+  />
+
+  <div
+    class="absolute inset-0 flex w-3/5 flex-col justify-self-center bg-linear-to-br from-[#616465]/85 to-[#e2f4ff]/85"
+  >
+    <h2 mat-dialog-title class="!text-white">{{ game.name }}</h2>
+    <mat-dialog-content class="!text-white">
+      <div>
+        <mat-label for="game-score">Quel est ton ressenti sur le jeu ?</mat-label>
+        <mat-slider min="1" max="10" step="1" discrete showTickMarks>
+          <input id="game-score" matSliderThumb [(ngModel)]="score" />
+        </mat-slider>
+        {{ scoreLabel() }}
+      </div>
+
+      <div>
+        <mat-label for="game-status">Quel est le niveau d'avancement ?</mat-label>
+        <mat-radio-group
+          class="flex flex-col items-start m-[15px 0]"
+          id="game-status"
+          [(ngModel)]="selectedStatus"
+        >
+          @for (status of allStatus; track status) {
+            <mat-radio-button class="!text-white" [value]="status">{{ status }}</mat-radio-button>
+          }
+        </mat-radio-group>
+      </div>
+
+      <div>
+        <mat-label for="personnal-notes" class="mb-2 block !text-white"
+          >Commentaires personnels ?</mat-label
+        >
+        <textarea
+          matInput
+          id="personnal-notes"
+          placeholder="Ex. Tower Defense par excellence"
+          aria-label="Commentaires personnels"
+          [(ngModel)]="personnalNotes"
+        ></textarea>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+      <button matButton mat-dialog-close>Enregistrer</button>
+    </mat-dialog-actions>
+  </div>
+</section>

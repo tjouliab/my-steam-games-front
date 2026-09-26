@@ -2,6 +2,7 @@ import { CurrencyPipe, DecimalPipe, NgOptimizedImage, PercentPipe } from '@angul
 import { Component, computed, inject, viewChild } from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconButton } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -13,6 +14,7 @@ import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
 import { GameDto } from '../../types/game.dto';
 import { GameUtils } from '../../utils/game.utils';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 const COLUMNS = {
   JEU: { FIELD: 'jeu', NAME: 'Jeu' },
@@ -52,6 +54,7 @@ const COLUMNS = {
 })
 export class TableComponent {
   private readonly gamesService = inject(GamesService);
+  private readonly dialog = inject(MatDialog);
 
   private readonly sort = viewChild(MatSort);
 
@@ -119,6 +122,12 @@ export class TableComponent {
   });
 
   protected onEdit(game: GameDto): void {
-    return;
+    const dialogRef = this.dialog.open<EditDialogComponent, GameDto>(EditDialogComponent, {
+      data: game,
+      width: '1440px',
+      maxWidth: '1440px',
+    });
+
+    dialogRef.afterClosed().subscribe((data) => console.log('data', data));
   }
 }
