@@ -14,7 +14,7 @@ import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
 import { GameDto } from '../../types/game.dto';
 import { GameUtils } from '../../utils/game.utils';
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { EditDialogComponent, EditDialogResult } from '../edit-dialog/edit-dialog.component';
 
 const COLUMNS = {
   JEU: { FIELD: 'jeu', NAME: 'Jeu' },
@@ -122,11 +122,14 @@ export class TableComponent {
   });
 
   protected onEdit(game: GameDto): void {
-    const dialogRef = this.dialog.open<EditDialogComponent, GameDto>(EditDialogComponent, {
-      data: game,
-      width: '1440px',
-      maxWidth: '1440px',
-    });
+    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, EditDialogResult>(
+      EditDialogComponent,
+      {
+        data: game,
+        width: '1440px',
+        maxWidth: '1440px',
+      },
+    );
 
     dialogRef.afterClosed().subscribe((data) => console.log('data', data));
   }

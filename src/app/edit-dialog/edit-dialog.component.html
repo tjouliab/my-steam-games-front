@@ -8,48 +8,58 @@
     alt="Game Background"
   />
 
-  <div
+  <form
+    [formRoot]="editForm"
     class="absolute inset-0 flex w-3/5 flex-col justify-self-center bg-linear-to-br from-[#616465]/85 to-[#e2f4ff]/85"
   >
     <h2 mat-dialog-title class="!text-white">{{ game.name }}</h2>
     <mat-dialog-content class="!text-white">
-      <div>
-        <mat-label for="game-score">Quel est ton ressenti sur le jeu ?</mat-label>
-        <mat-slider min="1" max="10" step="1" discrete showTickMarks>
-          <input id="game-score" matSliderThumb [(ngModel)]="score" />
+      <fieldset class="m-0 border-0 p-0">
+        <legend id="game-score-label">Quel est ton ressenti sur le jeu ?</legend>
+        <mat-slider class="w-full" min="1" max="10" step="1" discrete showTickMarks>
+          <input
+            matSliderThumb
+            aria-labelledby="game-score-label game-score-value"
+            [formField]="editForm.personnalScore"
+          />
         </mat-slider>
-        {{ scoreLabel() }}
-      </div>
+        <output id="game-score-value">{{ scoreLabel() }}</output>
+      </fieldset>
 
-      <div>
-        <mat-label for="game-status">Quel est le niveau d'avancement ?</mat-label>
+      <fieldset class="m-0 border-0 p-0">
+        <legend id="game-status-label">Quel est le niveau d'avancement ?</legend>
         <mat-radio-group
-          class="flex flex-col items-start m-[15px 0]"
-          id="game-status"
-          [(ngModel)]="selectedStatus"
+          class="my-[15px] flex flex-col items-start"
+          aria-labelledby="game-status-label"
+          [formField]="editForm.status"
         >
           @for (status of allStatus; track status) {
             <mat-radio-button class="!text-white" [value]="status">{{ status }}</mat-radio-button>
           }
         </mat-radio-group>
-      </div>
 
-      <div>
-        <mat-label for="personnal-notes" class="mb-2 block !text-white"
-          >Commentaires personnels ?</mat-label
-        >
+        @if (editForm.status().touched() && editForm.status().invalid()) {
+          <p id="game-status-error" class="text-sm text-red-200" role="alert">
+            {{ editForm.status().errors()[0].message }}
+          </p>
+        }
+      </fieldset>
+
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label class="!text-white" for="personnal-notes">Commentaires personnels ?</mat-label>
         <textarea
           matInput
           id="personnal-notes"
           placeholder="Ex. Tower Defense par excellence"
-          aria-label="Commentaires personnels"
-          [(ngModel)]="personnalNotes"
+          [formField]="editForm.personnalNotes"
         ></textarea>
-      </div>
+      </mat-form-field>
     </mat-dialog-content>
 
     <mat-dialog-actions>
-      <button matButton mat-dialog-close>Enregistrer</button>
+      <button matButton type="submit" [disabled]="editForm().invalid() || editForm().submitting()">
+        Enregistrer
+      </button>
     </mat-dialog-actions>
-  </div>
+  </form>
 </section>

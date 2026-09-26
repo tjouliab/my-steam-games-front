@@ -1,12 +1,12 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormField, FormRoot, form, max, min, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,16 +28,30 @@ const SCORES_LABEL = {
   10: "GOTY faut que j'en parle à tout le monde",
 } as const;
 
+export type GameScore = keyof typeof SCORES_LABEL;
+
+interface EditDialogModel {
+  personnalScore: GameScore;
+  status: GameStatusLabel | null;
+  personnalNotes: string;
+}
+
+export type EditDialogResult = EditDialogModel & { status: GameStatusLabel };
+
+function isGameScore(score: number | null): score is GameScore {
+  return score !== null && Number.isInteger(score) && score >= 1 && score <= 10;
+}
+
 @Component({
   imports: [
     MatDialogTitle,
     MatRadioModule,
     MatFormFieldModule,
-    FormsModule,
+    FormField,
+    FormRoot,
     MatInputModule,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     MatSliderModule,
     MatButtonModule,
     NgOptimizedImage,
@@ -47,17 +61,38 @@ const SCORES_LABEL = {
   templateUrl: './edit-dialog.component.html',
 })
 export class EditDialogComponent {
+  private readonly dialogRef =
+    inject<MatDialogRef<EditDialogComponent, EditDialogResult>>(MatDialogRef);
   protected readonly game: GameDto = inject(MAT_DIALOG_DATA);
 
   protected readonly allStatus: GameStatusLabel[] = ['100%', 'Finished', 'Unfinished', 'Abandoned'];
 
-  protected readonly score = signal<keyof typeof SCORES_LABEL>(
-    (this.game.personnalScore as keyof typeof SCORES_LABEL) ?? 7,
-  );
-  protected readonly selectedStatus = signal<GameStatusLabel | null>(
-    this.game.status?.label ?? null,
-  );
-  protected readonly personnalNotes = signal(this.game.personnalNotes);
+  protected readonly editModel = signal<EditDialogModel>({
+    personnalScore: isGameScore(this.game.personnalScore) ? this.game.personnalScore : 7,
+    status: this.game.status?.label ?? null,
+    personnalNotes: this.game.personnalNotes ?? '',
+  });
 
-  protected readonly scoreLabel = computed(() => SCORES_LABEL[this.score()]);
+  protected readonly editForm = form(
+    this.editModel,
+    (game) => {
+      min(game.personnalScore, 1);
+      max(game.personnalScore, 10);
+      required(game.status, { message: "Le niveau d'avancement est obligatoire" });
+    },
+    {
+      name: 'edit-game',
+      submission: {
+        action: async (form) => {
+          const value = form().value();
+
+          if (value.status !== null) {
+            this.dialogRef.close({ ...value, status: value.status });
+          }
+        },
+      },
+    },
+  );
+
+  protected readonly scoreLabel = computed(() => SCORES_LABEL[this.editModel().personnalScore]);
 }
