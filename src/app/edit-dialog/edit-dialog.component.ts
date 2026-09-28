@@ -1,4 +1,4 @@
-import { NgOptimizedImage } from '@angular/common';
+import { KeyValuePipe, NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormField, FormRoot, form, max, min, required } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
-import { GameDto, GameStatusLabel } from '../../types/game.dto';
+import { GameStatusService } from '../../services/game-status.service';
+import { GameDto, GameEditBody } from '../../types/game.dto';
 
 const SCORES_LABEL = {
   1: '???',
@@ -29,14 +30,6 @@ const SCORES_LABEL = {
 } as const;
 
 export type GameScore = keyof typeof SCORES_LABEL;
-
-interface EditDialogModel {
-  personnalScore: GameScore;
-  status: GameStatusLabel | null;
-  personnalNotes: string;
-}
-
-export type EditDialogResult = EditDialogModel & { status: GameStatusLabel };
 
 function isGameScore(score: number | null): score is GameScore {
   return score !== null && Number.isInteger(score) && score >= 1 && score <= 10;
@@ -54,6 +47,7 @@ function isGameScore(score: number | null): score is GameScore {
     MatDialogActions,
     MatSliderModule,
     MatButtonModule,
+    KeyValuePipe,
     NgOptimizedImage,
   ],
   selector: 'app-edit-dialog',
@@ -62,14 +56,15 @@ function isGameScore(score: number | null): score is GameScore {
 })
 export class EditDialogComponent {
   private readonly dialogRef =
-    inject<MatDialogRef<EditDialogComponent, EditDialogResult>>(MatDialogRef);
+    inject<MatDialogRef<EditDialogComponent, GameEditBody>>(MatDialogRef);
   protected readonly game: GameDto = inject(MAT_DIALOG_DATA);
+  private readonly gameStatusService = inject(GameStatusService);
 
-  protected readonly allStatus: GameStatusLabel[] = ['100%', 'Finished', 'Unfinished', 'Abandoned'];
+  protected readonly allStatus = this.gameStatusService.allGameStatus;
 
-  protected readonly editModel = signal<EditDialogModel>({
+  protected readonly editModel = signal<GameEditBody>({
     personnalScore: isGameScore(this.game.personnalScore) ? this.game.personnalScore : 7,
-    status: this.game.status?.label ?? null,
+    statusId: this.game.status?.id ?? 1,
     personnalNotes: this.game.personnalNotes ?? '',
   });
 
@@ -78,7 +73,7 @@ export class EditDialogComponent {
     (game) => {
       min(game.personnalScore, 1);
       max(game.personnalScore, 10);
-      required(game.status, { message: "Le niveau d'avancement est obligatoire" });
+      required(game.statusId, { message: "Le niveau d'avancement est obligatoire" });
     },
     {
       name: 'edit-game',
@@ -86,13 +81,17 @@ export class EditDialogComponent {
         action: async (form) => {
           const value = form().value();
 
-          if (value.status !== null) {
-            this.dialogRef.close({ ...value, status: value.status });
+          if (value.statusId !== null) {
+            this.dialogRef.close({ ...value, statusId: value.statusId });
           }
         },
       },
     },
   );
 
-  protected readonly scoreLabel = computed(() => SCORES_LABEL[this.editModel().personnalScore]);
+  protected readonly scoreLabel = computed(() => {
+    const personnalScore = this.editModel().personnalScore;
+    if (!isGameScore(personnalScore)) return 'Inconnu';
+    return SCORES_LABEL[personnalScore];
+  });
 }

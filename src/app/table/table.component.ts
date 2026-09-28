@@ -12,9 +12,9 @@ import { NeedsEditPipe } from '../../pipes/needs-edit.pipe';
 import { PlayTimePipe } from '../../pipes/play-time.pipe';
 import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
-import { GameDto } from '../../types/game.dto';
+import { GameDto, GameEditBody } from '../../types/game.dto';
 import { GameUtils } from '../../utils/game.utils';
-import { EditDialogComponent, EditDialogResult } from '../edit-dialog/edit-dialog.component';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 const COLUMNS = {
   JEU: { FIELD: 'jeu', NAME: 'Jeu' },
@@ -122,7 +122,7 @@ export class TableComponent {
   });
 
   protected onEdit(game: GameDto): void {
-    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, EditDialogResult>(
+    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, GameEditBody>(
       EditDialogComponent,
       {
         data: game,
