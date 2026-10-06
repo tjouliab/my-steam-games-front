@@ -18,6 +18,7 @@ import { firstValueFrom } from 'rxjs';
 import { GameStatusService } from '../../services/game-status.service';
 import { GamesService } from '../../services/games.service';
 import { GameDto, GameEditBody } from '../../types/game.dto';
+import { EditDialogOutput } from './edit-dialog-output';
 
 const SCORES_LABEL = {
   1: '???',
@@ -66,7 +67,8 @@ export class EditDialogComponent {
   protected readonly game: GameDto = inject(MAT_DIALOG_DATA);
   private readonly gamesService = inject(GamesService);
   private readonly gameStatusService = inject(GameStatusService);
-  private readonly dialogRef = inject<MatDialogRef<EditDialogComponent>>(MatDialogRef);
+  private readonly dialogRef =
+    inject<MatDialogRef<EditDialogComponent, EditDialogOutput>>(MatDialogRef);
 
   protected readonly allStatus = this.gameStatusService.allGameStatus;
 
@@ -88,7 +90,7 @@ export class EditDialogComponent {
       submission: {
         action: async (form) => {
           await firstValueFrom(this.gamesService.editOne({ ...form().value(), id: this.game.id }));
-          this.dialogRef.close();
+          this.dialogRef.close({ reload: this.hasChanged() });
         },
       },
     },
@@ -99,4 +101,13 @@ export class EditDialogComponent {
     if (!isGameScore(personnalScore)) return 'Inconnu';
     return SCORES_LABEL[personnalScore];
   });
+
+  private hasChanged(): boolean {
+    const newValues = this.editForm().value();
+    return (
+      this.game.personnalScore !== newValues.personnalScore ||
+      this.game.personnalNotes !== newValues.personnalNotes ||
+      this.game.status?.id !== newValues.statusId
+    );
+  }
 }

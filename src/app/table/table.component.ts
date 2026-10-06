@@ -12,8 +12,9 @@ import { NeedsEditPipe } from '../../pipes/needs-edit.pipe';
 import { PlayTimePipe } from '../../pipes/play-time.pipe';
 import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
-import { GameDto, GameEditBody } from '../../types/game.dto';
+import { GameDto } from '../../types/game.dto';
 import { GameUtils } from '../../utils/game.utils';
+import { EditDialogOutput } from '../edit-dialog/edit-dialog-output';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 
 const COLUMNS = {
@@ -122,12 +123,17 @@ export class TableComponent {
   });
 
   protected onEdit(game: GameDto): void {
-    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, GameEditBody>(EditDialogComponent, {
-      data: game,
-      width: '1440px',
-      maxWidth: '1440px',
-    });
+    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, EditDialogOutput>(
+      EditDialogComponent,
+      {
+        data: game,
+        width: '1440px',
+        maxWidth: '1440px',
+      },
+    );
 
-    dialogRef.afterClosed().subscribe(() => this.gamesResource.reload());
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result?.reload) this.gamesResource.reload();
+    });
   }
 }
