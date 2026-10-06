@@ -65,11 +65,19 @@
 
       <mat-dialog-actions>
         <button
-          matButton
+          matButton="filled"
           type="submit"
+          class="relative"
           [disabled]="editForm().invalid() || editForm().submitting()"
         >
-          Enregistrer
+          <span [class.invisible]="editForm().submitting()">Enregistrer</span>
+          @if (editForm().submitting()) {
+            <mat-spinner
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              diameter="18"
+              aria-label="Enregistrement en cours"
+            />
+          }
         </button>
       </mat-dialog-actions>
     </form>

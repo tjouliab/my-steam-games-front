@@ -122,15 +122,12 @@ export class TableComponent {
   });
 
   protected onEdit(game: GameDto): void {
-    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, GameEditBody>(
-      EditDialogComponent,
-      {
-        data: game,
-        width: '1440px',
-        maxWidth: '1440px',
-      },
-    );
+    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, GameEditBody>(EditDialogComponent, {
+      data: game,
+      width: '1440px',
+      maxWidth: '1440px',
+    });
 
-    dialogRef.afterClosed().subscribe((data) => console.log('data', data));
+    dialogRef.afterClosed().subscribe(() => this.gamesResource.reload());
   }
 }

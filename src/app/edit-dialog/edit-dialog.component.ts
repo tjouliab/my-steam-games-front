@@ -11,9 +11,12 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
+import { firstValueFrom } from 'rxjs';
 import { GameStatusService } from '../../services/game-status.service';
+import { GamesService } from '../../services/games.service';
 import { GameDto, GameEditBody } from '../../types/game.dto';
 
 const SCORES_LABEL = {
@@ -29,7 +32,11 @@ const SCORES_LABEL = {
   10: "GOTY faut que j'en parle à tout le monde",
 } as const;
 
-export type GameScore = keyof typeof SCORES_LABEL;
+type GameScore = keyof typeof SCORES_LABEL;
+
+type FormEdit = Omit<GameEditBody, 'id'> & {
+  personnalNotes: string;
+};
 
 function isGameScore(score: number | null): score is GameScore {
   return score !== null && Number.isInteger(score) && score >= 1 && score <= 10;
@@ -47,6 +54,7 @@ function isGameScore(score: number | null): score is GameScore {
     MatDialogActions,
     MatSliderModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     KeyValuePipe,
     NgOptimizedImage,
   ],
@@ -55,14 +63,14 @@ function isGameScore(score: number | null): score is GameScore {
   templateUrl: './edit-dialog.component.html',
 })
 export class EditDialogComponent {
-  private readonly dialogRef =
-    inject<MatDialogRef<EditDialogComponent, GameEditBody>>(MatDialogRef);
   protected readonly game: GameDto = inject(MAT_DIALOG_DATA);
+  private readonly gamesService = inject(GamesService);
   private readonly gameStatusService = inject(GameStatusService);
+  private readonly dialogRef = inject<MatDialogRef<EditDialogComponent>>(MatDialogRef);
 
   protected readonly allStatus = this.gameStatusService.allGameStatus;
 
-  protected readonly editModel = signal<GameEditBody>({
+  protected readonly editModel = signal<FormEdit>({
     personnalScore: isGameScore(this.game.personnalScore) ? this.game.personnalScore : 7,
     statusId: this.game.status?.id ?? 1,
     personnalNotes: this.game.personnalNotes ?? '',
@@ -79,11 +87,8 @@ export class EditDialogComponent {
       name: 'edit-game',
       submission: {
         action: async (form) => {
-          const value = form().value();
-
-          if (value.statusId !== null) {
-            this.dialogRef.close({ ...value, statusId: value.statusId });
-          }
+          await firstValueFrom(this.gamesService.editOne({ ...form().value(), id: this.game.id }));
+          this.dialogRef.close();
         },
       },
     },
