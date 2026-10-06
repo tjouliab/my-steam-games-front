@@ -31,22 +31,26 @@
 
   tr.mat-mdc-header-row,
   tr.mat-mdc-header-row th {
+    height: 5vh;
     background-color: var(--table-header-bg);
     color: white;
   }
 
   tr.mat-mdc-row:nth-child(odd),
   tr.mat-mdc-row:nth-child(odd) td {
+    height: 10vh;
     background-color: var(--table-row-odd-bg);
   }
 
   tr.mat-mdc-row:nth-child(even),
   tr.mat-mdc-row:nth-child(even) td {
+    height: 10vh;
     background-color: var(--table-row-even-bg);
   }
 
   tr.mat-mdc-footer-row,
-  tr.mat-mdc-footer-row th {
+  tr.mat-mdc-footer-row td {
+    height: 5vh;
     background-color: var(--table-footer-bg);
     color: white;
   }
