@@ -11,14 +11,24 @@
       </th>
       <td mat-cell *matCellDef="let game; let $index = index" class="!w-[206px]">
         <!-- Ratio w/h: 2.14 -->
-        <img
-          class="!min-h-[96px] !min-w-[206px] !max-h-[96px] !max-w-[206px] object-contain"
-          [ngSrc]="game.imgIconUrl"
-          [priority]="$index < 10"
-          alt="Game Icon"
-          width="206"
-          height="96"
-        />
+        @if ($index < 10) {
+          <img
+            class="!min-h-[96px] !min-w-[206px] !max-h-[96px] !max-w-[206px] object-contain"
+            [ngSrc]="game.imgIconUrl"
+            priority
+            alt="Game Icon"
+            width="206"
+            height="96"
+          />
+        } @else {
+          <img
+            class="!min-h-[96px] !min-w-[206px] !max-h-[96px] !max-w-[206px] object-contain"
+            [ngSrc]="game.imgIconUrl"
+            alt="Game Icon"
+            width="206"
+            height="96"
+          />
+        }
       </td>
       <td mat-footer-cell *matFooterCellDef>
         <span class="footer-icon-text">
