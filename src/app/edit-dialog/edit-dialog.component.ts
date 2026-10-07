@@ -89,8 +89,13 @@ export class EditDialogComponent {
       name: 'edit-game',
       submission: {
         action: async (form) => {
-          await firstValueFrom(this.gamesService.editOne({ ...form().value(), id: this.game.id }));
-          this.dialogRef.close({ reload: this.hasChanged() });
+          const hasChanged = this.hasChanged();
+          if (hasChanged) {
+            await firstValueFrom(
+              this.gamesService.editOne({ ...form().value(), id: this.game.id }),
+            );
+          }
+          this.dialogRef.close({ reload: hasChanged });
         },
       },
     },
