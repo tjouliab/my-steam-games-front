@@ -1,3 +1,241 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+:root {
+  color-scheme: dark;
+
+  /* Colors */
+  --msg-bg: #101822;
+  --msg-surface: #182431;
+  --msg-surface-hover: #223447;
+  --msg-row-odd: #16222f;
+  --msg-row-even: #1c2b3b;
+  --msg-row-hover: #263d52;
+  --msg-border: #35495e;
+  --msg-control-border: #7892aa;
+  --msg-text: #f1f5f9;
+  --msg-muted: #a9bacb;
+  --msg-accent: #67c8f5;
+  --msg-accent-hover: #8cd8fa;
+  --msg-accent-pressed: #49b3e1;
+  --msg-on-accent: #101822;
+  --msg-selected: #193c50;
+  --msg-success: #77d5ad;
+  --msg-success-bg: #143a32;
+  --msg-warning: #f5c66a;
+  --msg-warning-bg: #3a301e;
+  --msg-danger: #ff9ca8;
+  --msg-danger-bg: #402631;
+  --msg-chart-violet: #b8a5f5;
+  --msg-skeleton: #304459;
+  --msg-skeleton-highlight: #3b536b;
+  --msg-overlay: rgb(3 9 15 / 64%);
+
+  /* Typography */
+  --msg-font-family:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --msg-font-size-page-title: 1.5rem;
+  --msg-line-height-page-title: 2rem;
+  --msg-font-size-section-title: 1.125rem;
+  --msg-line-height-section-title: 1.625rem;
+  --msg-font-size-widget-title: 1rem;
+  --msg-line-height-widget-title: 1.5rem;
+  --msg-font-size-body: 0.875rem;
+  --msg-line-height-body: 1.25rem;
+  --msg-font-size-control: 1rem;
+  --msg-line-height-control: 1.5rem;
+  --msg-font-size-label: 0.8125rem;
+  --msg-line-height-label: 1.125rem;
+  --msg-font-size-kpi: 1.75rem;
+  --msg-line-height-kpi: 2.25rem;
+  --msg-font-size-timer: 3rem;
+  --msg-line-height-timer: 3.5rem;
+  --msg-font-weight-regular: 400;
+  --msg-font-weight-medium: 500;
+  --msg-font-weight-semibold: 600;
+  --msg-font-weight-emphasis: 650;
+
+  /* Spacing */
+  --msg-space-1: 0.25rem;
+  --msg-space-2: 0.5rem;
+  --msg-space-3: 0.75rem;
+  --msg-space-4: 1rem;
+  --msg-space-6: 1.5rem;
+  --msg-space-8: 2rem;
+  --msg-space-12: 3rem;
+  --msg-page-gutter: var(--msg-space-4);
+  --msg-grid-gap: var(--msg-space-4);
+
+  /* Shapes and dimensions */
+  --msg-radius-sm: 0.25rem;
+  --msg-radius: 0.375rem;
+  --msg-control-height: 2.75rem;
+  --msg-touch-target: 2.75rem;
+  --msg-sidebar-width: 13.5rem;
+  --msg-row-height: 4.5rem;
+  --msg-cover-width: 9.5rem;
+  --msg-cover-width-mobile: 6rem;
+  --msg-drawer-width: 27.5rem;
+  --msg-dialog-width: 35rem;
+  --msg-content-max-width: 100rem;
+  --msg-mobile-header-height: 3.5rem;
+  --msg-sync-strip-height: 3.5rem;
+  --msg-textarea-min-height: 6rem;
+  --msg-kpi-min-height: 7.75rem;
+  --msg-chart-min-height: 15rem;
+  --msg-icon-size: 1.25rem;
+  --msg-navigation-icon-size: 1.5rem;
+
+  /* Responsive boundaries. Use the matching media queries below in CSS. */
+  --msg-breakpoint-tablet: 48rem;
+  --msg-breakpoint-desktop: 68.75rem;
+
+  /* Motion, elevation and stacking */
+  --msg-motion-fast: 120ms;
+  --msg-motion-panel: 180ms;
+  --msg-motion-skeleton: 1800ms;
+  --msg-shadow-overlay: 0 0.75rem 2rem rgb(0 0 0 / 32%);
+  --msg-z-content: 0;
+  --msg-z-header: 10;
+  --msg-z-timer: 20;
+  --msg-z-overlay: 40;
+  --msg-z-dialog: 50;
+  --msg-z-dialog-menu: 60;
+  --msg-z-notification: 70;
+}
+
+/* Tailwind utilities stay aligned with the global design tokens. */
+@theme inline {
+  --font-sans: var(--msg-font-family);
+  --color-msg-bg: var(--msg-bg);
+  --color-msg-surface: var(--msg-surface);
+  --color-msg-surface-hover: var(--msg-surface-hover);
+  --color-msg-row-odd: var(--msg-row-odd);
+  --color-msg-row-even: var(--msg-row-even);
+  --color-msg-row-hover: var(--msg-row-hover);
+  --color-msg-border: var(--msg-border);
+  --color-msg-control-border: var(--msg-control-border);
+  --color-msg-text: var(--msg-text);
+  --color-msg-muted: var(--msg-muted);
+  --color-msg-accent: var(--msg-accent);
+  --color-msg-success: var(--msg-success);
+  --color-msg-warning: var(--msg-warning);
+  --color-msg-danger: var(--msg-danger);
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 68.75rem;
+  --breakpoint-3xl: 100rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 20rem;
+  min-height: 100%;
+  background: var(--msg-bg);
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--msg-bg);
+  color: var(--msg-text);
+  font-family: var(--msg-font-family);
+  font-size: var(--msg-font-size-body);
+  font-weight: var(--msg-font-weight-regular);
+  line-height: var(--msg-line-height-body);
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  font-size: var(--msg-font-size-control);
+  line-height: var(--msg-line-height-control);
+}
+
+button,
+a,
+input,
+select,
+textarea,
+[tabindex]:not([tabindex='-1']) {
+  &:focus-visible {
+    outline: 2px solid var(--msg-accent);
+    outline-offset: 2px;
+  }
+}
+
+img,
+svg {
+  display: block;
+  max-inline-size: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-block-start: 0;
+}
+
+h1 {
+  font-size: var(--msg-font-size-page-title);
+  font-weight: var(--msg-font-weight-emphasis);
+  line-height: var(--msg-line-height-page-title);
+}
+
+h2 {
+  font-size: var(--msg-font-size-section-title);
+  font-weight: var(--msg-font-weight-semibold);
+  line-height: var(--msg-line-height-section-title);
+}
+
+h3 {
+  font-size: var(--msg-font-size-widget-title);
+  font-weight: var(--msg-font-weight-semibold);
+  line-height: var(--msg-line-height-widget-title);
+}
+
+::selection {
+  background: var(--msg-selected);
+  color: var(--msg-text);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --msg-page-gutter: var(--msg-space-6);
+    --msg-grid-gap: var(--msg-space-6);
+    --msg-font-size-page-title: 1.75rem;
+    --msg-line-height-page-title: 2.25rem;
+    --msg-font-size-kpi: 2rem;
+    --msg-line-height-kpi: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --msg-motion-fast: 0ms;
+    --msg-motion-panel: 0ms;
+    --msg-motion-skeleton: 0ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
