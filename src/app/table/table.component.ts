@@ -1,9 +1,12 @@
 import { CurrencyPipe, DecimalPipe, NgOptimizedImage, PercentPipe } from '@angular/common';
-import { Component, computed, inject, viewChild } from '@angular/core';
+import { Component, computed, inject, signal, viewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { GenresPipe } from '../../pipes/genres.pipe';
@@ -39,6 +42,9 @@ const COLUMNS = {
     MatIconModule,
     MatBadgeModule,
     MatIconButton,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
     NgOptimizedImage,
     SteamScorePipe,
     GenresPipe,
@@ -58,6 +64,7 @@ export class TableComponent {
   private readonly dialog = inject(MatDialog);
 
   private readonly sort = viewChild(MatSort);
+  protected readonly filter = signal('');
 
   protected readonly gamesResource = this.gamesService.allGames;
   protected readonly dataSource = computed(() => {
@@ -65,6 +72,7 @@ export class TableComponent {
 
     const dataSource = new MatTableDataSource<GameDto>(this.gamesResource.value());
     dataSource.sort = this.sort() ?? null;
+    dataSource.filter = this.filter();
     dataSource.sortingDataAccessor = (game, column) => {
       if (column === COLUMNS.JEU.FIELD) return game.name.toLocaleLowerCase();
       if (column === COLUMNS.STATUS.FIELD) return game.status?.label ?? '';

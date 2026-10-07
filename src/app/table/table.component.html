@@ -3,6 +3,17 @@
 } @else if (gamesResource.error()) {
   <p>Impossible de charger les jeux.</p>
 } @else if (dataSource(); as dataSource) {
+  <mat-form-field appearance="outline">
+    <mat-label id="filter-label">Filtrer les jeux</mat-label>
+    <input
+      matInput
+      type="text"
+      [(ngModel)]="filter"
+      aria-labelledby="filter-label"
+      placeholder="Ex. Portal"
+    />
+  </mat-form-field>
+
   <table mat-table matSort [dataSource]="dataSource">
     <!-- Img -->
     <ng-container [matColumnDef]="COLUMNS.JEU.FIELD">
@@ -49,7 +60,7 @@
       <td mat-footer-cell *matFooterCellDef>
         <span class="footer-icon-text">
           <mat-icon svgIcon="average" />
-          {{ personnalScoreAvg() }}/10
+          {{ personnalScoreAvg() | number: '1.0-2' }}/10
         </span>
       </td>
     </ng-container>
