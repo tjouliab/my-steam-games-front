@@ -190,9 +190,9 @@
         mat-header-cell
         *matHeaderCellDef
         aria-label="row actions"
-        class="!w-[64px] !min-w-[64px]"
+        class="!w-16 !min-w-16"
       ></th>
-      <td mat-cell *matCellDef="let game" class="!w-[64px] !min-w-[64px]">
+      <td mat-cell *matCellDef="let game" class="!w-16 !min-w-16">
         <div class="relative inline-flex">
           <button
             matIconButton
@@ -211,7 +211,7 @@
         @let count = countNeedsEdit();
         @if (count > 0) {
           <span
-            class="relative -top-[8px] inline-block"
+            class="relative -top-2 inline-block"
             matBadgeSize="medium"
             matBadgePosition="above after"
             [matBadge]="count"

@@ -4,7 +4,7 @@
 } @else if (allStatus.error()) {
   <p>Impossible de charger les jeux.</p>
 } @else {
-  <section class="relative isolate h-[810px] w-[1440px] overflow-hidden bg-[#1E2E48]">
+  <section class="relative isolate h-[810px] w-[1440px] overflow-hidden bg-msg-surface">
     <img
       class="absolute inset-0 -z-10 h-full w-full object-cover"
       [ngSrc]="game.backgroundUrl"
@@ -15,10 +15,10 @@
 
     <form
       [formRoot]="editForm"
-      class="absolute inset-0 flex w-3/5 flex-col justify-self-center bg-linear-to-br from-[#616465]/85 to-[#e2f4ff]/85"
+      class="absolute inset-0 flex w-3/5 flex-col justify-self-center bg-linear-to-br from-msg-surface/85 to-msg-surface-hover/85"
     >
-      <h2 mat-dialog-title class="!text-white">{{ game.name }}</h2>
-      <mat-dialog-content class="!text-white">
+      <h2 mat-dialog-title class="!text-msg-text">{{ game.name }}</h2>
+      <mat-dialog-content class="!text-msg-text">
         <fieldset class="m-0 border-0 p-0">
           <legend id="game-score-label">Quel est ton ressenti sur le jeu ?</legend>
           <mat-slider class="w-full" min="1" max="10" step="1" discrete showTickMarks>
@@ -34,26 +34,28 @@
         <fieldset class="m-0 border-0 p-0">
           <legend id="game-status-label">Quel est le niveau d'avancement ?</legend>
           <mat-radio-group
-            class="my-[15px] flex flex-col items-start"
+            class="my-4 flex flex-col items-start"
             aria-labelledby="game-status-label"
             [formField]="editForm.statusId"
           >
             @for (status of allStatus.value() | keyvalue; track status.key) {
-              <mat-radio-button class="!text-white" [value]="+status.key">
+              <mat-radio-button class="!text-msg-text" [value]="+status.key">
                 {{ status.value }}
               </mat-radio-button>
             }
           </mat-radio-group>
 
           @if (editForm.statusId().touched() && editForm.statusId().invalid()) {
-            <p id="game-status-error" class="text-sm text-red-200" role="alert">
+            <p id="game-status-error" class="text-sm text-msg-danger" role="alert">
               {{ editForm.statusId().errors()[0].message }}
             </p>
           }
         </fieldset>
 
         <mat-form-field class="w-full" appearance="outline">
-          <mat-label class="!text-white" for="personnal-notes">Commentaires personnels ?</mat-label>
+          <mat-label class="!text-msg-text" for="personnal-notes">
+            Commentaires personnels ?
+          </mat-label>
           <textarea
             matInput
             id="personnal-notes"

@@ -109,3 +109,8 @@ Travailler écran ou fonctionnalité par écran selon la demande. Lors d’un d�
 Vérifier les changements avec les commandes existantes et les tests pertinents. Pour une modification visuelle, inspecter si possible le rendu desktop et mobile, notamment les jaquettes, le scroll, les contrôles et les états. Ne pas annoncer une vérification visuelle ou un test qui n’a pas été effectué.
 
 Terminer par un compte rendu concis : ce qui a changé, comment cela a été vérifié, limites restantes et éventuels contrats manquants. Ne pas modifier des fichiers sans rapport ni écraser les changements de l’utilisateur. Maintenir les décisions durables dans la documentation concernée lorsqu’elles évoluent ; garder ce fichier synthétique et éviter les règles redondantes dans plusieurs documents.
+
+## Cohérence HTML & CSS
+
+Tailwind doit être utilisé en priorité pour gérer les styles. Si VRAIMENT c'est pas possible de faire autrement, alors ok tu peux utiliser du CSS. C'est notamment utile pour les propriétés spécifiques à Angular, par exemple :host et ::ng-deep.
+Merci de ne pas englober un composant HTML par une div pour ajouter du style et d'utiliser le :host pour éviter de complexifier le DOM.
