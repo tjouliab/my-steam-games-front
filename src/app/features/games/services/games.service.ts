@@ -1,8 +1,8 @@
 import { resource, Service } from '@angular/core';
 import { functional } from 'my-steam-games-sdk';
 import { defer, Observable } from 'rxjs';
-import { environment } from '../../environment';
-import { GameEditBody } from '../types/game.dto';
+import { environment } from '../../../../../environment';
+import { GameEditBody } from '../types/game.types';
 
 @Service()
 export class GamesService {

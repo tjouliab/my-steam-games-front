@@ -21,7 +21,7 @@ Timothé est développeur FullStack. Il aime coder et concevoir la logique méti
 
 1. Lire la demande actuelle et les instructions applicables aux fichiers concernés, y compris les éventuels AGENTS.md plus locaux.
 2. Inspecter l’état du dépôt et les changements en cours ; préserver le travail existant de l’utilisateur.
-3. Lire `IMPLEMENTATION-ROADMAP.md` avant toute implémentation et repérer le premier jalon pertinent non terminé.
+3. Lire `docs/IMPLEMENTATION-ROADMAP.md` avant toute implémentation et repérer le premier jalon pertinent non terminé.
 4. Consulter README, manifests, lockfile et scripts pertinents pour identifier la stack, les versions et les commandes réelles. Ne pas les déduire de ce seul document.
 5. Pour une tâche UI, lire les références de conception ci-dessous et les composants concernés avant d’écrire du code.
 6. Annoncer brièvement le périmètre de travail ; avancer par modifications ciblées. Ne pas reconstruire toute l’application à partir des maquettes.
@@ -30,14 +30,14 @@ Ne pas supposer que les conversations précédentes sont disponibles. Le dépôt
 
 ## Documents de référence
 
-Emplacement prévu : `design-system/:version`. Prendre en priorité la version de dossier la plus élevée.
+Emplacement prévu : `docs/design-system/:version`. Prendre en priorité la version de dossier la plus élevée.
 
 | Document | Rôle |
 |---|---|
 | `IMPLEMENTATION-ROADMAP.md` | Roadmap d’implémentation et source de vérité de l’avancement |
 | `MySteamGames-UX-UI-Specs-v1.0.md` | Spécifications fonctionnelles |
 | `MySteamGames-Design-System-v1.0.md` | Tokens, dimensions, composants, états, responsive et déclinaisons d’écrans |
-| Maquettes disponibles dans `design-system/:version` | Intention visuelle et hiérarchie, pas contrats de données |
+| Maquettes disponibles dans `docs/design-system/:version` | Intention visuelle et hiérarchie, pas contrats de données |
 
 La demande actuelle de Timothé précise le périmètre et peut faire évoluer ces décisions. Les spécifications écrites priment sur les images. Le design system précise les choix visuels et corrige explicitement certains écarts des maquettes ; ses corrections prévalent sur les anciennes propositions graphiques des specs. En cas de contradiction métier non résolue, la signaler.
 

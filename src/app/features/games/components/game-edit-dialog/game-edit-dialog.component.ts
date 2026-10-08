@@ -17,8 +17,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { firstValueFrom } from 'rxjs';
 import { GameStatusService } from '../../services/game-status.service';
 import { GamesService } from '../../services/games.service';
-import { GameDto, GameEditBody } from '../../types/game.dto';
-import { EditDialogOutput } from './edit-dialog-output';
+import { GameDto, GameEditBody } from '../../types/game.types';
+import { GameEditDialogOutput } from './game-edit-dialog-output';
 
 const SCORES_LABEL = {
   1: '???',
@@ -59,16 +59,16 @@ function isGameScore(score: number | null): score is GameScore {
     KeyValuePipe,
     NgOptimizedImage,
   ],
-  selector: 'app-edit-dialog',
-  styleUrl: './edit-dialog.component.css',
-  templateUrl: './edit-dialog.component.html',
+  selector: 'app-game-edit-dialog',
+  styleUrl: './game-edit-dialog.component.css',
+  templateUrl: './game-edit-dialog.component.html',
 })
-export class EditDialogComponent {
+export class GameEditDialogComponent {
   protected readonly game: GameDto = inject(MAT_DIALOG_DATA);
   private readonly gamesService = inject(GamesService);
   private readonly gameStatusService = inject(GameStatusService);
   private readonly dialogRef =
-    inject<MatDialogRef<EditDialogComponent, EditDialogOutput>>(MatDialogRef);
+    inject<MatDialogRef<GameEditDialogComponent, GameEditDialogOutput>>(MatDialogRef);
 
   protected readonly allStatus = this.gameStatusService.allGameStatus;
 

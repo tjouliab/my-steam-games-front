@@ -1,4 +1,4 @@
-import { GameDto, GameStatusLabel } from '../types/game.dto';
+import { GameDto, GameStatusLabel } from '../types/game.types';
 
 export abstract class GameUtils {
   static getSteamScore(game: GameDto): number {

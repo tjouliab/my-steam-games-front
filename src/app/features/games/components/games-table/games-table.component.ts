@@ -15,10 +15,10 @@ import { NeedsEditPipe } from '../../pipes/needs-edit.pipe';
 import { PlayTimePipe } from '../../pipes/play-time.pipe';
 import { SteamScorePipe } from '../../pipes/steam-score.pipe';
 import { GamesService } from '../../services/games.service';
-import { GameDto } from '../../types/game.dto';
+import { GameDto } from '../../types/game.types';
 import { GameUtils } from '../../utils/game.utils';
-import { EditDialogOutput } from '../edit-dialog/edit-dialog-output';
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { GameEditDialogOutput } from '../game-edit-dialog/game-edit-dialog-output';
+import { GameEditDialogComponent } from '../game-edit-dialog/game-edit-dialog.component';
 
 const COLUMNS = {
   JEU: { FIELD: 'jeu', NAME: 'Jeu' },
@@ -55,11 +55,11 @@ const COLUMNS = {
     PercentPipe,
     DecimalPipe,
   ],
-  selector: 'app-table',
-  styleUrl: './table.component.css',
-  templateUrl: './table.component.html',
+  selector: 'app-games-table',
+  styleUrl: './games-table.component.css',
+  templateUrl: './games-table.component.html',
 })
-export class TableComponent {
+export class GamesTableComponent {
   private readonly gamesService = inject(GamesService);
   private readonly dialog = inject(MatDialog);
 
@@ -131,8 +131,8 @@ export class TableComponent {
   });
 
   protected onEdit(game: GameDto): void {
-    const dialogRef = this.dialog.open<EditDialogComponent, GameDto, EditDialogOutput>(
-      EditDialogComponent,
+    const dialogRef = this.dialog.open<GameEditDialogComponent, GameDto, GameEditDialogOutput>(
+      GameEditDialogComponent,
       {
         data: game,
         width: '1440px',

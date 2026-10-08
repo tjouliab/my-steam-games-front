@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { GameDto } from '../types/game.dto';
+import { GameDto } from '../types/game.types';
 import { GameUtils } from '../utils/game.utils';
 
 @Pipe({

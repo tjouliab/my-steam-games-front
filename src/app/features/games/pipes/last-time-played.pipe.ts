@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Temporal } from '@js-temporal/polyfill';
-import { GameDto } from '../types/game.dto';
+import { GameDto } from '../types/game.types';
 
 @Pipe({
   name: 'lastTimePlayed',

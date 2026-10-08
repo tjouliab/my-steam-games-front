@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { TableComponent } from './table/table.component';
+import { GamesTableComponent } from './features/games/components/games-table/games-table.component';
 
 @Component({
   selector: 'app-root',
-  imports: [TableComponent],
+  imports: [GamesTableComponent],
   templateUrl: './app.component.html',
 })
 export class App {

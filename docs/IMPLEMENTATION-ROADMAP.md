@@ -35,7 +35,7 @@ Chaque changement backend affectant les contrats se termine par la régénérati
 | Étape | Statut | Responsable principal | Dépend de |
 |---|---|---|---|
 | Acquis — socle global du design system | Terminé | Codex | — |
-| Jalon 0 — Sécuriser le point de départ | À faire | Ensemble | Acquis |
+| Jalon 0 — Sécuriser le point de départ | Terminé | Ensemble | Acquis |
 | Jalon 1 — Identité durable et contrat Games | À faire | Timothé | Jalon 0 |
 | Jalon 2 — Shell responsive et navigation | À faire | Codex | Jalon 0 |
 | Jalon 3 — Games complet | À faire | Codex | Jalons 1 et 2 |
@@ -68,18 +68,23 @@ Validation effectuée :
 
 ## Jalon 0 — Sécuriser le point de départ
 
-**Statut : À faire**
+**Statut : Terminé**
 
-- [ ] Préserver et isoler les changements utilisateur déjà présents.
-- [ ] Cartographier les composants legacy qui seront remplacés et leurs comportements encore utiles.
-- [ ] Créer les premiers tests frontend pour les règles pures : tri, filtrage, alternance et éligibilité Picker.
-- [ ] Introduire progressivement l’organisation `core/layout`, `core/sync`, `features/*` et `shared/ui` sans déplacement massif anticipé.
-- [ ] Confirmer les commandes de validation frontend et backend réelles.
-- [ ] Documenter les avertissements de build déjà présents afin de distinguer les régressions.
+- [x] Préserver et isoler les changements utilisateur déjà présents.
+- [x] Cartographier les composants legacy qui seront remplacés et leurs comportements encore utiles.
+- [x] Ne pas anticiper de règles ou de tests sans comportement consommé par l’application ; les ajouter avec la fonctionnalité concernée si nécessaire.
+- [x] Valider puis appliquer progressivement l’organisation cible sans déplacement massif anticipé.
+- [x] Confirmer les commandes de validation frontend et backend réelles.
+- [x] Documenter les avertissements de build déjà présents afin de distinguer les régressions.
 
-Critère de sortie : le point de départ est reproductible, les changements utilisateur sont préservés et les premières règles métier frontend sont couvertes.
+Critère de sortie : le point de départ est reproductible, les changements utilisateur sont préservés et l’organisation cible validée est appliquée aux fichiers existants sans abstraction inutilisée.
 
-Validation : _à renseigner_.
+Validation effectuée le 8 octobre 2026 :
+
+- [x] `pnpm build` : build réussi, avec uniquement les deux avertissements de baseline documentés.
+- [x] `pnpm build` après migration : build réussi, composants et imports résolus depuis `features/games`.
+- [x] `git diff --check` : aucune erreur d’espacement ; `todo.txt` frontend et changements du backend adjacent préservés.
+- [x] Cartographie, contrats observés, comparaison de la maquette Wishlist et commandes consignés dans `docs/jalon-0-baseline.md`.
 
 ## Jalon 1 — Identité durable des jeux et contrat Games
 
