@@ -21,9 +21,10 @@ Timothé est développeur FullStack. Il aime coder et concevoir la logique méti
 
 1. Lire la demande actuelle et les instructions applicables aux fichiers concernés, y compris les éventuels AGENTS.md plus locaux.
 2. Inspecter l’état du dépôt et les changements en cours ; préserver le travail existant de l’utilisateur.
-3. Consulter README, manifests, lockfile et scripts pertinents pour identifier la stack, les versions et les commandes réelles. Ne pas les déduire de ce seul document.
-4. Pour une tâche UI, lire les références de conception ci-dessous et les composants concernés avant d’écrire du code.
-5. Annoncer brièvement le périmètre de travail ; avancer par modifications ciblées. Ne pas reconstruire toute l’application à partir des maquettes.
+3. Lire `IMPLEMENTATION-ROADMAP.md` avant toute implémentation et repérer le premier jalon pertinent non terminé.
+4. Consulter README, manifests, lockfile et scripts pertinents pour identifier la stack, les versions et les commandes réelles. Ne pas les déduire de ce seul document.
+5. Pour une tâche UI, lire les références de conception ci-dessous et les composants concernés avant d’écrire du code.
+6. Annoncer brièvement le périmètre de travail ; avancer par modifications ciblées. Ne pas reconstruire toute l’application à partir des maquettes.
 
 Ne pas supposer que les conversations précédentes sont disponibles. Le dépôt et sa documentation versionnée portent le contexte durable. Ce fichier décrit les intentions et contraintes, pas la liste des fonctionnalités déjà implémentées.
 
@@ -33,6 +34,7 @@ Emplacement prévu : `design-system/:version`. Prendre en priorité la version d
 
 | Document | Rôle |
 |---|---|
+| `IMPLEMENTATION-ROADMAP.md` | Roadmap d’implémentation et source de vérité de l’avancement |
 | `MySteamGames-UX-UI-Specs-v1.0.md` | Spécifications fonctionnelles |
 | `MySteamGames-Design-System-v1.0.md` | Tokens, dimensions, composants, états, responsive et déclinaisons d’écrans |
 | Maquettes disponibles dans `design-system/:version` | Intention visuelle et hiérarchie, pas contrats de données |
@@ -106,9 +108,11 @@ Les endpoints, champs et fonctionnalités décrits dans les documents ne sont pa
 
 Travailler écran ou fonctionnalité par écran selon la demande. Lors d’un démarrage UI sans autre priorité : tokens et shell, puis Games et ses états, avant d’étendre aux autres écrans. Ne pas transformer cet ordre suggéré en obligation de tout implémenter dans une session.
 
+Pour toute tâche couverte par `IMPLEMENTATION-ROADMAP.md`, marquer un seul jalon principal En cours, mettre à jour sa checklist dans la même livraison que le code et reporter les validations réellement effectuées. Ne jamais cocher une tâche non testée, partielle ou seulement simulée. Documenter les blocages et contrats backend manquants sous la tâche concernée.
+
 Vérifier les changements avec les commandes existantes et les tests pertinents. Pour une modification visuelle, inspecter si possible le rendu desktop et mobile, notamment les jaquettes, le scroll, les contrôles et les états. Ne pas annoncer une vérification visuelle ou un test qui n’a pas été effectué.
 
-Terminer par un compte rendu concis : ce qui a changé, comment cela a été vérifié, limites restantes et éventuels contrats manquants. Ne pas modifier des fichiers sans rapport ni écraser les changements de l’utilisateur. Maintenir les décisions durables dans la documentation concernée lorsqu’elles évoluent ; garder ce fichier synthétique et éviter les règles redondantes dans plusieurs documents.
+Terminer par un compte rendu concis indiquant le jalon concerné, ce qui a changé, comment cela a été vérifié, les limites restantes et les éventuels contrats manquants. La roadmap doit refléter le résultat réel de la livraison. Ne pas modifier des fichiers sans rapport ni écraser les changements de l’utilisateur. Maintenir les décisions durables dans la documentation concernée lorsqu’elles évoluent ; garder ce fichier synthétique et éviter les règles redondantes dans plusieurs documents.
 
 ## Cohérence HTML & CSS
 
