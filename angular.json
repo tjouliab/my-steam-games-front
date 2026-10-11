@@ -67,7 +67,7 @@
           "builder": "@angular/build:dev-server",
           "options": {
             "prebundle": {
-              "exclude": ["my-steam-games-sdk"]
+              "exclude": ["@tjouliab/my-steam-games-sdk"]
             }
           },
           "configurations": {

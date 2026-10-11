@@ -7,3 +7,4 @@ minimumReleaseAgeExclude:
   - '@angular/cdk@22.2.0'
   - '@angular/material@22.2.0'
   - '@angular-devkit/schematics@22.1.9'
+  - '@tjouliab/my-steam-games-sdk@0.1.0 || 0.1.3'

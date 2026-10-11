@@ -196,9 +196,9 @@ importers:
       '@nestia/fetcher':
         specifier: 11.3.4
         version: 11.3.4
-      my-steam-games-sdk:
-        specifier: link:../my-steam-games-back/sdk
-        version: link:../my-steam-games-back/sdk
+      '@tjouliab/my-steam-games-sdk':
+        specifier: 0.1.3
+        version: 0.1.3(typescript@6.0.3)
       rxjs:
         specifier: ~7.8.2
         version: 7.8.2
@@ -1737,6 +1737,9 @@ packages:
 
   '@tailwindcss/postcss@4.3.3':
     resolution: {integrity: sha512-JTSZZGQi1AyKirbLN3azmjVzef92tcX7h+iSqPdaeStyFpGpDlKvvpxeOE8njhbUanbRwr3z8DyzhICWnMtQeg==}
+
+  '@tjouliab/my-steam-games-sdk@0.1.3':
+    resolution: {integrity: sha512-q7SA04GJGvae5AmfcJm6Yk9DyE38Z1t8LWGWKyC5CZKYkYZW0Z9iahzQwdMh/k9uggFwSfM7xAJBjNLc5ien8A==, tarball: https://npm.pkg.github.com/download/@tjouliab/my-steam-games-sdk/0.1.3/9a0690b8a2c610263d76eae64c28ebd94fd429c8}
 
   '@tybys/wasm-util@0.10.4':
     resolution: {integrity: sha512-W3c4gRigFS0T/Ma4qIYF3GDAc5AQdHb1yL5znJT1Zv1YaD9Kitx656wBjvr19qbiosmZT8lWDM5BEMynUqX65A==}
@@ -4856,6 +4859,14 @@ snapshots:
       '@tailwindcss/oxide': 4.3.3
       postcss: 8.5.28
       tailwindcss: 4.3.3
+
+  '@tjouliab/my-steam-games-sdk@0.1.3(typescript@6.0.3)':
+    dependencies:
+      '@nestia/fetcher': 11.3.4
+      typia: 12.1.1(typescript@6.0.3)
+    transitivePeerDependencies:
+      - '@types/node'
+      - typescript
 
   '@tybys/wasm-util@0.10.4':
     dependencies:

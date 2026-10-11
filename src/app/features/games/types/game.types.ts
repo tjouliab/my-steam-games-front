@@ -1,5 +1,5 @@
-import { editOne } from 'my-steam-games-sdk/functional/games/edit_one/index';
-import { get } from 'my-steam-games-sdk/functional/games/index';
+import { editOne } from '@tjouliab/my-steam-games-sdk/lib/functional/games/edit_one/index';
+import { get } from '@tjouliab/my-steam-games-sdk/lib/functional/games/index';
 
 export type GameDto = get.Output[number];
 
