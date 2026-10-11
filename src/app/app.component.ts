@@ -20,7 +20,9 @@ export class App {
 
     this.iconRegistry.addSvgIcon(
       'average',
-      this.sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/average.svg'),
+      this.sanitizer.bypassSecurityTrustResourceUrl(
+        '/assets/icons/average.svg',
+      ),
     );
   }
 }

@@ -1,6 +1,13 @@
 import { KeyValuePipe, NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { FormField, FormRoot, form, max, min, required } from '@angular/forms/signals';
+import {
+  FormField,
+  FormRoot,
+  form,
+  max,
+  min,
+  required,
+} from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -68,12 +75,16 @@ export class GameEditDialogComponent {
   private readonly gamesService = inject(GamesService);
   private readonly gameStatusService = inject(GameStatusService);
   private readonly dialogRef =
-    inject<MatDialogRef<GameEditDialogComponent, GameEditDialogOutput>>(MatDialogRef);
+    inject<MatDialogRef<GameEditDialogComponent, GameEditDialogOutput>>(
+      MatDialogRef,
+    );
 
   protected readonly allStatus = this.gameStatusService.allGameStatus;
 
   protected readonly editModel = signal<FormEdit>({
-    personnalScore: isGameScore(this.game.personnalScore) ? this.game.personnalScore : 7,
+    personnalScore: isGameScore(this.game.personnalScore)
+      ? this.game.personnalScore
+      : 7,
     statusId: this.game.status?.id ?? 1,
     personnalNotes: this.game.personnalNotes ?? '',
   });
@@ -83,7 +94,9 @@ export class GameEditDialogComponent {
     (game) => {
       min(game.personnalScore, 1);
       max(game.personnalScore, 10);
-      required(game.statusId, { message: "Le niveau d'avancement est obligatoire" });
+      required(game.statusId, {
+        message: "Le niveau d'avancement est obligatoire",
+      });
     },
     {
       name: 'edit-game',
@@ -92,7 +105,10 @@ export class GameEditDialogComponent {
           const hasChanged = this.hasChanged();
           if (hasChanged) {
             await firstValueFrom(
-              this.gamesService.editOne({ ...form().value(), id: this.game.id }),
+              this.gamesService.editOne({
+                ...form().value(),
+                id: this.game.id,
+              }),
             );
           }
           this.dialogRef.close({ reload: hasChanged });

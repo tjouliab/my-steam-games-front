@@ -20,10 +20,7 @@ export class GamesService {
 
   editOne(body: GameEditBody): Observable<void> {
     return defer(() =>
-      functional.games.edit_one.editOne(
-        { host: environment.backendURL },
-        body,
-      ),
+      functional.games.edit_one.editOne({ host: environment.backendURL }, body),
     );
   }
 }

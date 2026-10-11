@@ -1,4 +1,9 @@
-import { CurrencyPipe, DecimalPipe, NgOptimizedImage, PercentPipe } from '@angular/common';
+import {
+  CurrencyPipe,
+  DecimalPipe,
+  NgOptimizedImage,
+  PercentPipe,
+} from '@angular/common';
 import { Component, computed, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -70,13 +75,16 @@ export class GamesTableComponent {
   protected readonly dataSource = computed(() => {
     if (this.gamesResource.status() !== 'resolved') return undefined;
 
-    const dataSource = new MatTableDataSource<GameDto>(this.gamesResource.value());
+    const dataSource = new MatTableDataSource<GameDto>(
+      this.gamesResource.value(),
+    );
     dataSource.sort = this.sort() ?? null;
     dataSource.filter = this.filter();
     dataSource.sortingDataAccessor = (game, column) => {
       if (column === COLUMNS.JEU.FIELD) return game.name.toLocaleLowerCase();
       if (column === COLUMNS.STATUS.FIELD) return game.status?.label ?? '';
-      if (column === COLUMNS.STEAM_SCORE.FIELD) return GameUtils.getSteamScore(game);
+      if (column === COLUMNS.STEAM_SCORE.FIELD)
+        return GameUtils.getSteamScore(game);
 
       return game[column as keyof GameDto] as string | number;
     };
@@ -100,22 +108,35 @@ export class GamesTableComponent {
     COLUMNS.EDIT.FIELD,
   ];
 
-  protected readonly gamesCount = computed(() => this.dataSource()?.data.length ?? 0);
+  protected readonly gamesCount = computed(
+    () => this.dataSource()?.data.length ?? 0,
+  );
 
   protected readonly personnalScoreAvg = computed(() => {
-    return GameUtils.calculateAvg(this.dataSource()?.data, (game) => game.personnalScore);
+    return GameUtils.calculateAvg(
+      this.dataSource()?.data,
+      (game) => game.personnalScore,
+    );
   });
 
   protected readonly steamScoreAvg = computed(() => {
-    return GameUtils.calculateAvg(this.dataSource()?.data, (game) => GameUtils.getSteamScore(game));
+    return GameUtils.calculateAvg(this.dataSource()?.data, (game) =>
+      GameUtils.getSteamScore(game),
+    );
   });
 
   protected readonly metacriticScoreAvg = computed(() => {
-    return GameUtils.calculateAvg(this.dataSource()?.data, (game) => game.metacriticScore);
+    return GameUtils.calculateAvg(
+      this.dataSource()?.data,
+      (game) => game.metacriticScore,
+    );
   });
 
   protected readonly playTimeSum = computed(() => {
-    return GameUtils.calculateSum(this.dataSource()?.data, (game) => game.playTime);
+    return GameUtils.calculateSum(
+      this.dataSource()?.data,
+      (game) => game.playTime,
+    );
   });
 
   protected readonly finishedPercentage = computed(() => {
@@ -123,7 +144,10 @@ export class GamesTableComponent {
   });
 
   protected readonly initialPriceSum = computed(() => {
-    return GameUtils.calculateSum(this.dataSource()?.data, (game) => game.initialPrice);
+    return GameUtils.calculateSum(
+      this.dataSource()?.data,
+      (game) => game.initialPrice,
+    );
   });
 
   protected readonly countNeedsEdit = computed(() => {
@@ -131,14 +155,15 @@ export class GamesTableComponent {
   });
 
   protected onEdit(game: GameDto): void {
-    const dialogRef = this.dialog.open<GameEditDialogComponent, GameDto, GameEditDialogOutput>(
+    const dialogRef = this.dialog.open<
       GameEditDialogComponent,
-      {
-        data: game,
-        width: '1440px',
-        maxWidth: '1440px',
-      },
-    );
+      GameDto,
+      GameEditDialogOutput
+    >(GameEditDialogComponent, {
+      data: game,
+      width: '1440px',
+      maxWidth: '1440px',
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.reload) this.gamesResource.reload();

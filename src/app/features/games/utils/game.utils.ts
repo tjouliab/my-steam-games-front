@@ -16,6 +16,7 @@ export abstract class GameUtils {
   ): number {
     if (games == null) return 0;
 
+    // eslint-disable-next-line no-useless-assignment
     return games.reduce((acc, game) => (acc += callbackfn(game) ?? 0), 0);
   }
 
@@ -33,8 +34,15 @@ export abstract class GameUtils {
     return sum / filteredGames.length;
   }
 
-  static countByStatus(games: GameDto[]): Map<GameStatusLabel | 'total', number> {
-    const statusLabels: GameStatusLabel[] = ['100%', 'Finished', 'Unfinished', 'Abandoned'];
+  static countByStatus(
+    games: GameDto[],
+  ): Map<GameStatusLabel | 'total', number> {
+    const statusLabels: GameStatusLabel[] = [
+      '100%',
+      'Finished',
+      'Unfinished',
+      'Abandoned',
+    ];
     const countByStatus = new Map<GameStatusLabel | 'total', number>();
 
     let total = 0;
@@ -53,7 +61,11 @@ export abstract class GameUtils {
 
     const statusMap = GameUtils.countByStatus(games);
 
-    if (!statusMap.has('Unfinished') || !statusMap.has('total') || statusMap.get('total') === 0)
+    if (
+      !statusMap.has('Unfinished') ||
+      !statusMap.has('total') ||
+      statusMap.get('total') === 0
+    )
       return 1;
 
     return 1 - statusMap.get('Unfinished')! / statusMap.get('total')!;
