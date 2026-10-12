@@ -1,6 +1,6 @@
 import { resource, Service } from '@angular/core';
 import { functional } from '@tjouliab/my-steam-games-sdk';
-import { environment } from '../../../../../environment';
+import { environment } from '../../../../environments/environment';
 
 @Service()
 export class GameStatusService {
