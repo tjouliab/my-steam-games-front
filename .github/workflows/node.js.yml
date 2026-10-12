@@ -16,32 +16,38 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.SDK_PUBLISH_TOKEN }} # doit être un secret (Settings → Secrets and variables → Actions)
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v6
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
 
-    - name: Setup Node
-      uses: actions/setup-node@v7
-      with:
-        node-version-file: package.json
-        cache: pnpm
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: package.json
+          cache: pnpm
+          registry-url: 'https://npm.pkg.github.com' # configure la registry pour les packages GitHub
+          scope: '@tjouliab'
+          always-auth: true
 
-    - name: Install dependencies
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.SDK_PUBLISH_TOKEN }}
+      - name: Check token present (debug)
         run: |
           if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "::error::SDK_PUBLISH_TOKEN is missing"
+            echo "NODE_AUTH_TOKEN is missing"
             exit 1
+          else
+            echo "NODE_AUTH_TOKEN present (masked)"
           fi
 
-          pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-    - name: Build
-      run: pnpm build
+      - name: Build
+        run: pnpm build
 
-    - name: Test
-      run: pnpm test -- --watch=false
+      - name: Test
+        run: pnpm test -- --watch=false
