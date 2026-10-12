@@ -32,7 +32,13 @@ jobs:
     - name: Install dependencies
       env:
         NODE_AUTH_TOKEN: ${{ secrets.SDK_PUBLISH_TOKEN }}
-      run: pnpm install --frozen-lockfile
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::SDK_PUBLISH_TOKEN is missing"
+            exit 1
+          fi
+
+          pnpm install --frozen-lockfile
 
     - name: Build
       run: pnpm build
